@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Bcvp.Blog.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bcvp.Blog.Core.Domain\Bcvp.Blog.Core.Domain.csproj" />
+    <ProjectReference Include="..\Bcvp.Blog.Core.Application.Contracts\Bcvp.Blog.Core.Application.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Account.Application" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="4.4.0" />
+  </ItemGroup>
+
+</Project>
