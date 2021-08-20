@@ -87,6 +87,6 @@ app.Use(async (ctx, next) =>
 
 ## 反思
 
-ABP框架值得学习，但是.Net Core官方文档也要记得经常去看一下巩固复习。
+ABP框架值得学习，但是.Net Core官方文档也要记得经常去看一下巩固复习。不过这个地方也应该有其他更好的解决方案，希望大佬如果有更好的方案给我留言蟹蟹！
 
 https://github.com/abpframework/abp/commit/d8bdcffd4c69787e69fb7ae3c3375a44a0067e7c#diff-536faff86021c0373581d67458a5bdf291c1df099523e119493c8211b541c27e
