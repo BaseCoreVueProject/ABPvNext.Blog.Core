@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
@@ -13,10 +15,12 @@ namespace Bcvp.Blog.Core.BlogCore.Blogs
     public class BlogAppService : CoreAppService, IBlogAppService
     {
         private readonly IBlogRepository _blogRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BlogAppService(IBlogRepository blogRepository)
+        public BlogAppService(IBlogRepository blogRepository, IHttpContextAccessor httpContextAccessor)
         {
             _blogRepository = blogRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<ListResultDto<BlogDto>> GetListAsync()
         {
@@ -27,9 +31,18 @@ namespace Bcvp.Blog.Core.BlogCore.Blogs
             );
         }
 
+
         public async Task<BlogDto> GetByShortNameAsync(string shortName)
         {
             Check.NotNullOrWhiteSpace(shortName, nameof(shortName));
+
+            if (_httpContextAccessor.HttpContext.User != null)
+            {
+                bool flag = false;
+                _httpContextAccessor.HttpContext.User.IsInRole("rider");
+            }
+        
+
 
             var blog = await _blogRepository.FindByShortNameAsync(shortName);
 
