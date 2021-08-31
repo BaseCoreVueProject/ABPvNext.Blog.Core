@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bcvp.Blog.Core.BlogCore.Comments;
 using Bcvp.Blog.Core.BlogCore.Tagging;
+using Bcvp.Blog.Core.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using Volo.Abp.Application.Dtos;
@@ -148,6 +149,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
             return postDto;
         }
 
+        [Authorize(CorePermissions.Posts.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             // 查找文章
@@ -165,6 +167,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
             await PublishPostChangedEventAsync(post.BlogId);
         }
 
+        [Authorize(CorePermissions.Posts.Create)]
         public async Task<PostWithDetailsDto> CreateAsync(CreatePostDto input)
         {
             input.Url = await RenameUrlIfItAlreadyExistAsync(input.BlogId, input.Url);
@@ -189,6 +192,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
             return ObjectMapper.Map<Post, PostWithDetailsDto>(post);
         }
 
+        [Authorize(CorePermissions.Posts.Update)]
         public async Task<PostWithDetailsDto> UpdateAsync(Guid id, UpdatePostDto input)
         {
             var post = await _postRepository.GetAsync(id);

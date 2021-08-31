@@ -1,4 +1,6 @@
 ﻿using Bcvp.Blog.Core.BlogCore;
+using Bcvp.Blog.Core.BlogCore.Comments;
+using Bcvp.Blog.Core.BlogCore.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
@@ -30,6 +32,17 @@ namespace Bcvp.Blog.Core
             {
                 options.AddMaps<CoreApplicationModule>();
             });
+
+            Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy("BloggingUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
+                options.AddPolicy("BloggingDeletePolicy", policy => policy.Requirements.Add(CommonOperations.Delete));
+            });
+
+            context.Services.AddSingleton<IAuthorizationHandler, CommentAuthorizationHandler>();
+            context.Services.AddSingleton<IAuthorizationHandler, PostAuthorizationHandler>();
+         
+
         }
     }
 }
