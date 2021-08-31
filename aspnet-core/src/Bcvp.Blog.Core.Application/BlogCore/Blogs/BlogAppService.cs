@@ -36,14 +36,7 @@ namespace Bcvp.Blog.Core.BlogCore.Blogs
         {
             Check.NotNullOrWhiteSpace(shortName, nameof(shortName));
 
-            if (_httpContextAccessor.HttpContext.User != null)
-            {
-                bool flag = false;
-                _httpContextAccessor.HttpContext.User.IsInRole("rider");
-            }
-        
-
-
+           
             var blog = await _blogRepository.FindByShortNameAsync(shortName);
 
             if (blog == null)

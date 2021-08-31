@@ -16,11 +16,16 @@ namespace Bcvp.Blog.Core
              * Alternatively, you can split your mapping configurations
              * into multiple profile classes for a better organization. */
 
+            CreateMap<Comment, CommentWithDetailsDto>().Ignore(x => x.Writer);
+
 
             CreateMap<BlogCore.Blogs.Blog, BlogDto>();
             CreateMap<IdentityUser, BlogUserDto>();
+
             CreateMap<Post, PostWithDetailsDto>().Ignore(x => x.Writer).Ignore(x => x.CommentCount).Ignore(x => x.Tags);
+
             CreateMap<Tag, TagDto>();
+
             CreateMap<Post, PostCacheItem>().Ignore(x => x.CommentCount).Ignore(x => x.Tags);
             CreateMap<PostCacheItem, PostWithDetailsDto>()
                 .IgnoreModificationAuditedObjectProperties()
@@ -28,6 +33,11 @@ namespace Bcvp.Blog.Core
                 .Ignore(x => x.Writer)
                 .Ignore(x => x.CommentCount)
                 .Ignore(x => x.Tags);
+
+
+         
+
+
 
         }
     }
