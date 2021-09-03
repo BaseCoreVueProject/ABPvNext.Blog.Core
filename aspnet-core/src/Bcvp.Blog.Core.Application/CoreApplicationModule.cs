@@ -33,6 +33,7 @@ namespace Bcvp.Blog.Core
                 options.AddMaps<CoreApplicationModule>();
             });
 
+            // 注册
             Configure<AuthorizationOptions>(options =>
             {
                 options.AddPolicy("BloggingUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
