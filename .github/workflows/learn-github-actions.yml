@@ -6,6 +6,6 @@ jobs:
     steps: ## 步骤
       - uses: actions/checkout@v2 ## 这是检出仓库并将其下载到运行器的操作
       - uses: actions/setup-node@v1 ## 此操作会在运行器上安装 node 软件包，使您可以访问 npm 命令
-      - uses: ./.github/actions/hello-world-action ## 访问项目目录下的action文件
+      - uses: .github/actions/hello-world-action ## 访问项目目录下的action文件
       - run: npm install -g bats ## run 关键字指示作业在运行器上执行命令。 在这种情况下，使用 npm 来安装 bats 软件测试包。
       - run: bats -v ## 最后，您将运行 bats 命令，并且带有输出软件版本的参数
