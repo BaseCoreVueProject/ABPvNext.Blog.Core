@@ -8,4 +8,4 @@ jobs:
       - uses: actions/checkout@v2
       - run: cat ./.github/actions/hello-world-action/action.yml
       # This step references the directory that contains the action.
-      - uses: ./.github/actions/hello-world-action
+      - uses: ./.github/actions/hello-world-action/action.yml
