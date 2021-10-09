@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bcvp.Blog.Core.BlogCore.Comments;
 using Bcvp.Blog.Core.BlogCore.Tagging;
+using Bcvp.Blog.Core.BlogCore.Users;
 using Bcvp.Blog.Core.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
@@ -18,7 +19,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
 {
     public class PostAppService : CoreAppService, IPostAppService
     {
-        private IUserLookupService<IdentityUser> UserLookupService { get; }
+        protected IBlogUserLookupService UserLookupService { get; }
 
         private readonly IPostRepository _postRepository;
         private readonly ILocalEventBus _localEventBus;
@@ -26,7 +27,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
         private readonly ICommentRepository _commentRepository;
         private readonly IDistributedCache<List<PostCacheItem>> _postsCache;
 
-        public PostAppService(IPostRepository postRepository, ILocalEventBus localEventBus, ITagRepository tagRepository, IUserLookupService<IdentityUser> userLookupService, ICommentRepository commentRepository, IDistributedCache<List<PostCacheItem>> postsCache)
+        public PostAppService(IPostRepository postRepository, ILocalEventBus localEventBus, ITagRepository tagRepository, IBlogUserLookupService userLookupService, ICommentRepository commentRepository, IDistributedCache<List<PostCacheItem>> postsCache)
         {
             _postRepository = postRepository;
             _localEventBus = localEventBus;
@@ -37,7 +38,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
         }
 
   
-        public async Task<ListResultDto<PostWithDetailsDto>> GetListByBlogIdAndTagName(Guid id, string tagName)
+        public async Task<ListResultDto<PostWithDetailsDto>> GetListByBlogIdAndTagNameAsync(Guid id, string tagName)
         {
             // 根据blogId查询文章数据
             var posts = await _postRepository.GetPostsByBlogId(id);
@@ -67,7 +68,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
                         var creatorUser = await UserLookupService.FindByIdAsync(postDto.CreatorId.Value);
                         if (creatorUser != null)
                         {
-                            userDictionary[creatorUser.Id] = ObjectMapper.Map<IdentityUser, BlogUserDto>(creatorUser);
+                            userDictionary[creatorUser.Id] = ObjectMapper.Map<BlogUser, BlogUserDto>(creatorUser);
                         }
                     }
 
@@ -102,7 +103,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
                     var creatorUser = await UserLookupService.FindByIdAsync(post.CreatorId.Value);
                     if (creatorUser != null)
                     {
-                        post.Writer = ObjectMapper.Map<IdentityUser, BlogUserDto>(creatorUser);
+                        post.Writer = ObjectMapper.Map<BlogUser, BlogUserDto>(creatorUser);
                     }
                 }
             }
@@ -125,7 +126,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
             {
                 var creatorUser = await UserLookupService.FindByIdAsync(postDto.CreatorId.Value);
 
-                postDto.Writer = ObjectMapper.Map<IdentityUser, BlogUserDto>(creatorUser);
+                postDto.Writer = ObjectMapper.Map<BlogUser, BlogUserDto>(creatorUser);
             }
 
             return postDto;
@@ -143,7 +144,7 @@ namespace Bcvp.Blog.Core.BlogCore.Posts
             {
                 var creatorUser = await UserLookupService.FindByIdAsync(postDto.CreatorId.Value);
 
-                postDto.Writer = ObjectMapper.Map<IdentityUser, BlogUserDto>(creatorUser);
+                postDto.Writer = ObjectMapper.Map<BlogUser, BlogUserDto>(creatorUser);
             }
 
             return postDto;

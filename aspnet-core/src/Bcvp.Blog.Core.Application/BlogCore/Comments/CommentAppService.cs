@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bcvp.Blog.Core.BlogCore.Posts;
+using Bcvp.Blog.Core.BlogCore.Users;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Guids;
 using Volo.Abp.Identity;
@@ -13,12 +14,12 @@ namespace Bcvp.Blog.Core.BlogCore.Comments
 {
     public class CommentAppService : CoreAppService, ICommentAppService
     {
-        private IUserLookupService<IdentityUser> UserLookupService { get; }
+        protected IBlogUserLookupService UserLookupService;
 
         private readonly ICommentRepository _commentRepository;
         private readonly IGuidGenerator _guidGenerator;
 
-        public CommentAppService(ICommentRepository commentRepository, IGuidGenerator guidGenerator, IUserLookupService<IdentityUser> userLookupService)
+        public CommentAppService(ICommentRepository commentRepository, IGuidGenerator guidGenerator, IBlogUserLookupService userLookupService)
         {
             _commentRepository = commentRepository;
             _guidGenerator = guidGenerator;
@@ -42,7 +43,7 @@ namespace Bcvp.Blog.Core.BlogCore.Comments
 
                     if (creatorUser != null && !userDictionary.ContainsKey(creatorUser.Id))
                     {
-                        userDictionary.Add(creatorUser.Id, ObjectMapper.Map<IdentityUser, BlogUserDto>(creatorUser));
+                        userDictionary.Add(creatorUser.Id, ObjectMapper.Map<BlogUser, BlogUserDto>(creatorUser));
                     }
                 }
             }

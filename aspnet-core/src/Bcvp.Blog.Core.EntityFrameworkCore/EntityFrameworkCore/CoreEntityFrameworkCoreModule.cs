@@ -1,4 +1,8 @@
 ﻿using Bcvp.Blog.Core.BlogCore.Blogs;
+using Bcvp.Blog.Core.BlogCore.Comments;
+using Bcvp.Blog.Core.BlogCore.Posts;
+using Bcvp.Blog.Core.BlogCore.Tagging;
+using Bcvp.Blog.Core.BlogCore.Users;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -40,6 +44,10 @@ namespace Bcvp.Blog.Core.EntityFrameworkCore
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
                 options.AddRepository<BlogCore.Blogs.Blog, EfCoreBlogRepository>();
+                options.AddRepository<BlogUser, EfCoreBlogUserRepository>();
+                options.AddRepository<Post, EfCorePostRepository>();
+                options.AddRepository<Tag, EfCoreTagRepository>();
+                options.AddRepository<Comment, EfCoreCommentRepository>();
                 options.AddDefaultRepositories(includeAllEntities: true);
             });
 

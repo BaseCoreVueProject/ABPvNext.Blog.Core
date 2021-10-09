@@ -4,6 +4,7 @@ using Bcvp.Blog.Core.BlogCore.Blogs;
 using Bcvp.Blog.Core.BlogCore.Comments;
 using Bcvp.Blog.Core.BlogCore.Posts;
 using Bcvp.Blog.Core.BlogCore.Tagging;
+using Bcvp.Blog.Core.BlogCore.Users;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
@@ -63,6 +64,15 @@ namespace Bcvp.Blog.Core.EntityFrameworkCore
                 return;
             }
 
+            builder.Entity<BlogUser>(b =>
+            {
+                b.ToTable(CoreConsts.DbTablePrefix + "Users", CoreConsts.DbSchema);
+
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+
+                b.ApplyObjectExtensionMappings();
+            });
 
             builder.Entity<BlogCore.Blogs.Blog>(b =>
             {

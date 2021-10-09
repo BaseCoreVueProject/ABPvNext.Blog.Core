@@ -8,7 +8,7 @@ namespace Bcvp.Blog.Core.BlogCore.Tagging
 {
     public interface ITagAppService : IApplicationService
     {
-        Task<List<TagDto>> GetPopularTags(Guid blogId, GetPopularTagsInput input);
+        Task<List<TagDto>> GetPopularTagsAsync(Guid blogId, GetPopularTagsInput input);
 
     }
 }
