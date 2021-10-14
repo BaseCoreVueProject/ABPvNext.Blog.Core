@@ -1,4 +1,7 @@
 # ABP vNext Blog.Core
+Bcvp社区的Abp vNext教程,该教程适用于有过1-2年的.Net Core开发者学习，编程新人可以在学习完老张博客文章后，进行阅读。
+
+
 
 ## 从零开始学Abp vNext
 
