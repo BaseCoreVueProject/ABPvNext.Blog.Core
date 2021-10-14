@@ -6,4 +6,4 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 COPY . .
-ENTRYPOINT ["dotnet", "ShunHang.Mrt.HttpApi.Host.dll"]
+ENTRYPOINT ["dotnet", "Bcvp.Blog.Core.HttpApi.Host.dll"]
